@@ -1,5 +1,5 @@
 package mysql
 
-func SignUp() {
-
+func InsertUser() {
+	// 执行SQL语句入库
 }
