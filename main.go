@@ -4,6 +4,7 @@ import (
 	"bluebell/dao/mysql"
 	"bluebell/dao/redis"
 	"bluebell/logger"
+	"bluebell/pkg/snowflake"
 	"bluebell/routes"
 	"bluebell/settings"
 	"context"
@@ -50,6 +51,14 @@ func main() {
 		return
 	}
 	defer redis.Close()
+
+	// tip : 引入分布式ID生成器，采用的是雪花算法
+	if err := snowflake.Init(); err != nil {
+		fmt.Printf("Snowflake algorithm failed, err : %v\n", err)
+		return
+	}
+
+	// fmt.Printf("The generated id is %d\n", snowflake.GenID())
 
 	// tip 5.注册路由
 	router := routes.SetUp()

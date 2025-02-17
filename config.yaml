@@ -15,7 +15,7 @@ mysql:
   port: 3306
   user: root
   password: 666666
-  dbname: "sqlx_demo"
+  dbname: "bluebell"
   max_open_conns: 200
   max_idle_conns: 50
 
@@ -25,3 +25,7 @@ redis:
   port: 6379
   db: 0
   pool_size: 100
+
+snowflake:
+  startTime: "2020-07-01"
+  machineID: 1
