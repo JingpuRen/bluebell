@@ -29,14 +29,21 @@ func SignUpHandler(ctx *gin.Context) {
 		zap.L().Error("Controller\\user.go SignUpHandler failed")
 		// 请求参数有误
 		ctx.JSON(http.StatusOK, gin.H{
-			"msg": "请求参数有误",
+			"msg": "参数为空或者两次密码的输入不一致",
 		})
 		return
 	}
 	fmt.Println(p)
 	// 2.业务处理
-	logic.SignUp()
+	err = logic.SignUp(&p)
+
 	// 3.返回结果
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "注册失败",
+		})
+		return // 防止返回下面的结果，因此在这里直接返回
+	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "success",
 	})

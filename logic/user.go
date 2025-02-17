@@ -2,16 +2,28 @@ package logic
 
 import (
 	"bluebell/dao/mysql"
+	"bluebell/models"
 	"bluebell/pkg/snowflake"
 )
 
-func SignUp() {
+func SignUp(p *models.ParamSignUp) error {
 	// 判断用户是否已经注册
-	mysql.QueryUserByUsername()
+	err := mysql.CheckUserExist(p.Username)
+	// tip : 像这种直接返回来的这种err我们就直接返回就可以
+	if err != nil {
+		return err
+	}
 	// 生成UID
-	snowflake.GenID()
-	// 密码加密操作
+	userID := snowflake.GenID()
 
-	// 保存UID进数据库
-	mysql.InsertUser()
+	// 创建实例
+	user := models.User{
+		UserID:   userID,
+		Username: p.Username,
+		Password: p.Password,
+	}
+
+	// 保存注册后的数据进入数据库
+	err = mysql.InsertUser(&user)
+	return err
 }
