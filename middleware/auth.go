@@ -51,6 +51,9 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		// 将当前请求的userID信息保存到请求的上下文c上
 		// tip : 我们不应该在代码中出现一些莫名其妙的字符串，而是应当使用常量来代替这个字符串
 		c.Set(ContextUserIDKey, mc.UserID)
-		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
+
+		// tip : 后续的处理函数可以用过c.Get(ContextUserIDKey)来获取当前请求的用户信息，并且每个用户的userID都是独一无二的
+		// tip : 因此我们这样做就可以不用混淆了！！！
+		c.Next()
 	}
 }
