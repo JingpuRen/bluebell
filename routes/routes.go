@@ -22,7 +22,7 @@ func SetUp() *gin.Engine {
 	// 登录业务路由
 	router.GET("./signin", controller.SignInHandler)
 
-	//router.GET("./ping")
+	router.GET("./ping")
 
 	return router
 }

@@ -8,12 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	ContextUserIDKey string = "userID"
+	ContextJwtPrefix string = "Bearer"
+)
+
 // JWTAuthMiddleware 基于JWT的认证中间件
 func JWTAuthMiddleware() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		// 客户端携带Token有三种方式 1.放在请求头 2.放在请求体 3.放在URI
 		// 这里假设Token放在Header的Authorization中，并使用Bearer开头
-		// 这里的具体实现方式要依据你的实际业务情况决定
+		// tip : 这里的具体实现方式要依据我们的实际业务情况决定，并不是一成不变的！！！！
 		authHeader := c.Request.Header.Get("Authorization")
 		if authHeader == "" {
 			c.JSON(http.StatusOK, gin.H{
@@ -25,7 +30,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		}
 		// 按空格分割
 		parts := strings.SplitN(authHeader, " ", 2)
-		if !(len(parts) == 2 && parts[0] == "Bearer") {
+		if !(len(parts) == 2 && parts[0] == ContextJwtPrefix) {
 			c.JSON(http.StatusOK, gin.H{
 				"code": 2004,
 				"msg":  "请求头中auth格式有误",
@@ -43,8 +48,9 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 			c.Abort()
 			return
 		}
-		// 将当前请求的username信息保存到请求的上下文c上
-		c.Set("username", mc.Username)
+		// 将当前请求的userID信息保存到请求的上下文c上
+		// tip : 我们不应该在代码中出现一些莫名其妙的字符串，而是应当使用常量来代替这个字符串
+		c.Set(ContextUserIDKey, mc.UserID)
 		c.Next() // 后续的处理函数可以用过c.Get("username")来获取当前请求的用户信息
 	}
 }
