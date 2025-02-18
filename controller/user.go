@@ -34,10 +34,10 @@ func SignUpHandler(ctx *gin.Context) {
 		return
 	}
 	fmt.Println(p)
-	// 2.业务处理
+	// tip : 2.业务处理
 	err = logic.SignUp(&p)
 
-	// 3.返回结果
+	// tip : 3.返回结果
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"msg": "注册失败",
@@ -51,7 +51,7 @@ func SignUpHandler(ctx *gin.Context) {
 
 // SignInHandler 处理登录请求的函数
 func SignInHandler(ctx *gin.Context) {
-	// 1. 获取请求参数及参数校验
+	// tip : 1. 获取请求参数及参数校验
 	var p models.ParamSignIn
 	if err := ctx.ShouldBindJSON(&p); err != nil {
 		zap.L().Error("Controller\\user.go SignInHandler failed", zap.Error(err))
@@ -67,14 +67,14 @@ func SignInHandler(ctx *gin.Context) {
 		})
 		return
 	}
-	// 2. 业务处理
+	// tip : 2. 业务处理
 	if err := logic.SignIn(&p); err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"msg": err.Error(),
 		})
 		return
 	}
-	// 3. 返回结果
+	// tip : 3. 返回结果
 	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "用户登录成功",
 	})
