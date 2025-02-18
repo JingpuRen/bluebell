@@ -9,7 +9,7 @@ import (
 
 const salty = "JingpuRen"
 
-// CheckUserExist 根据用户名查询指定的用户是否存在
+// CheckUserExist 根据用户名查询想要注册的用户是否存在
 func CheckUserExist(username string) (err error) {
 	sqlStr := `select count(user_id) from user where username = ?`
 	var cnt int
@@ -17,10 +17,12 @@ func CheckUserExist(username string) (err error) {
 		return
 	}
 
+	// 用户存在
 	if cnt > 0 {
 		return errors.New("user has been created")
 	}
 
+	// 用户不存在
 	return
 
 }
@@ -42,4 +44,34 @@ func encryptPassword(oPassword string) string {
 	h.Write([]byte(salty))
 	// tip : h.Sum([]byte(oPassword))返回的是字节，通过EncodeToString()方法将其转化为十六进制的字符串
 	return hex.EncodeToString(h.Sum([]byte(oPassword)))
+}
+
+// CheckPasswordByUsername 根据用户名检查对应的密码是否正确
+func CheckPasswordByUsername(p *models.ParamSignIn) (err error) {
+	sqlStr := `select password from user where username = ?`
+	// 获得加密后的临时密码
+	var tmpPassword string
+	if err = db.Get(&tmpPassword, sqlStr, p.Username); err != nil {
+		return
+	}
+	// 判断密码是否正确
+	if tmpPassword != encryptPassword(p.Password) {
+		return errors.New("the password you entered is incorrect")
+	}
+	return
+}
+
+// CheckUserIsExistForLogin 根据用户名检查想要登录的用户是否存在
+func CheckUserIsExistForLogin(username string) (err error) {
+	sqlStr := `select count(user_id) from user where username = ?`
+	var cnt int
+	if err = db.Get(&cnt, sqlStr, username); err != nil {
+		return
+	}
+
+	if cnt == 0 {
+		return errors.New("user doesn't exist")
+	}
+
+	return
 }

@@ -48,3 +48,34 @@ func SignUpHandler(ctx *gin.Context) {
 		"msg": "success",
 	})
 }
+
+// SignInHandler 处理登录请求的函数
+func SignInHandler(ctx *gin.Context) {
+	// 1. 获取请求参数及参数校验
+	var p models.ParamSignIn
+	if err := ctx.ShouldBindJSON(&p); err != nil {
+		zap.L().Error("Controller\\user.go SignInHandler failed", zap.Error(err))
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "参数不正确",
+		})
+		return
+	}
+	if len(p.Username) == 0 || len(p.Password) == 0 {
+		zap.L().Error("Controller\\user.go SignInHandler failed")
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": "参数中有空值",
+		})
+		return
+	}
+	// 2. 业务处理
+	if err := logic.SignIn(&p); err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"msg": err.Error(),
+		})
+		return
+	}
+	// 3. 返回结果
+	ctx.JSON(http.StatusOK, gin.H{
+		"msg": "用户登录成功",
+	})
+}

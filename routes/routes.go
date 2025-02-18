@@ -18,5 +18,9 @@ func SetUp() *gin.Engine {
 
 	// 注册业务路由
 	router.GET("./signup", controller.SignUpHandler)
+
+	// 登录业务路由
+	router.GET("./signin", controller.SignInHandler)
+
 	return router
 }

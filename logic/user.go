@@ -4,6 +4,9 @@ import (
 	"bluebell/dao/mysql"
 	"bluebell/models"
 	"bluebell/pkg/snowflake"
+	"errors"
+
+	"go.uber.org/zap"
 )
 
 func SignUp(p *models.ParamSignUp) error {
@@ -26,4 +29,18 @@ func SignUp(p *models.ParamSignUp) error {
 	// 保存注册后的数据进入数据库
 	err = mysql.InsertUser(&user)
 	return err
+}
+
+func SignIn(p *models.ParamSignIn) error {
+	// 判断用户名是否存在
+	if err := mysql.CheckUserIsExistForLogin(p.Username); err != nil {
+		zap.L().Error("Logic\\user.go SignIn failed", zap.Error(err))
+		return errors.New("用户名不存在")
+	}
+	// 判断该用户输入的密码是否正确
+	if err := mysql.CheckPasswordByUsername(p); err != nil {
+		zap.L().Error("Logic\\user.go SignIn failed", zap.Error(err))
+		return errors.New("用户输入的密码不正确")
+	}
+	return nil
 }
