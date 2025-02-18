@@ -65,3 +65,16 @@
 {"level":"INFO","time":"2025-02-18T12:29:16.494+0800","caller":"logger/logger.go:83","msg":"/signin","status":200,"method":"GET","path":"/signin","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.43.0","errors":"","cost":0.0014589}
 {"level":"INFO","time":"2025-02-18T12:29:20.384+0800","caller":"bluebell/main.go:87","msg":"Shutdown Server ..."}
 {"level":"INFO","time":"2025-02-18T12:29:20.384+0800","caller":"bluebell/main.go:96","msg":"Server exiting"}
+{"level":"DEBUG","time":"2025-02-18T15:12:52.505+0800","caller":"bluebell/main.go:39","msg":"Logger init success ..."}
+{"level":"INFO","time":"2025-02-18T15:12:54.169+0800","caller":"bluebell/main.go:87","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2025-02-18T15:12:54.169+0800","caller":"bluebell/main.go:96","msg":"Server exiting"}
+{"level":"DEBUG","time":"2025-02-18T15:13:08.802+0800","caller":"bluebell/main.go:39","msg":"Logger init success ..."}
+{"level":"ERROR","time":"2025-02-18T15:13:21.220+0800","caller":"logic/user.go:43","msg":"Logic\\user.go SignIn failed","error":"the password you entered is incorrect"}
+{"level":"INFO","time":"2025-02-18T15:13:21.220+0800","caller":"logger/logger.go:83","msg":"/signin","status":200,"method":"GET","path":"/signin","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.43.0","errors":"","cost":0.0022148}
+{"level":"INFO","time":"2025-02-18T15:13:47.892+0800","caller":"logger/logger.go:83","msg":"/signin","status":200,"method":"GET","path":"/signin","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.43.0","errors":"","cost":0.0010505}
+{"level":"INFO","time":"2025-02-18T15:14:45.567+0800","caller":"bluebell/main.go:87","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2025-02-18T15:14:45.567+0800","caller":"bluebell/main.go:96","msg":"Server exiting"}
+{"level":"DEBUG","time":"2025-02-18T15:14:50.528+0800","caller":"bluebell/main.go:39","msg":"Logger init success ..."}
+{"level":"INFO","time":"2025-02-18T15:14:54.950+0800","caller":"logger/logger.go:83","msg":"/signin","status":200,"method":"GET","path":"/signin","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.43.0","errors":"","cost":0.0013314}
+{"level":"INFO","time":"2025-02-18T15:15:09.826+0800","caller":"bluebell/main.go:87","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2025-02-18T15:15:09.826+0800","caller":"bluebell/main.go:96","msg":"Server exiting"}

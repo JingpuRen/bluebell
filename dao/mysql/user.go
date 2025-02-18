@@ -75,3 +75,13 @@ func CheckUserIsExistForLogin(username string) (err error) {
 
 	return
 }
+
+// GetUserIDByUsername 根据username获取对应的userID
+func GetUserIDByUsername(username string) (int64, error) {
+	sqlStr := "select user_id from user where username = ?"
+	var userId int64
+	if err := db.Get(&userId, sqlStr, username); err != nil {
+		return userId, err
+	}
+	return userId, nil
+}

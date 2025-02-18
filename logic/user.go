@@ -3,6 +3,7 @@ package logic
 import (
 	"bluebell/dao/mysql"
 	"bluebell/models"
+	"bluebell/pkg/jwt"
 	"bluebell/pkg/snowflake"
 	"errors"
 
@@ -31,16 +32,27 @@ func SignUp(p *models.ParamSignUp) error {
 	return err
 }
 
-func SignIn(p *models.ParamSignIn) error {
+func SignIn(p *models.ParamSignIn) (string, error) {
 	// 判断用户名是否存在
 	if err := mysql.CheckUserIsExistForLogin(p.Username); err != nil {
 		zap.L().Error("Logic\\user.go SignIn failed", zap.Error(err))
-		return errors.New("用户名不存在")
+		return "", errors.New("用户名不存在")
 	}
 	// 判断该用户输入的密码是否正确
 	if err := mysql.CheckPasswordByUsername(p); err != nil {
 		zap.L().Error("Logic\\user.go SignIn failed", zap.Error(err))
-		return errors.New("用户输入的密码不正确")
+		return "", errors.New("用户输入的密码不正确")
 	}
-	return nil
+	// 获取user_id
+	userId, err := mysql.GetUserIDByUsername(p.Username)
+	if err != nil {
+		return "", err
+	}
+
+	token, err := jwt.GenToken(userId, p.Username)
+	if err != nil {
+		return "", err
+	}
+
+	return token, nil
 }

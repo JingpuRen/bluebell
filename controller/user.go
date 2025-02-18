@@ -68,7 +68,8 @@ func SignInHandler(ctx *gin.Context) {
 		return
 	}
 	// tip : 2. 业务处理
-	if err := logic.SignIn(&p); err != nil {
+	token, err := logic.SignIn(&p)
+	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"msg": err.Error(),
 		})
@@ -76,6 +77,8 @@ func SignInHandler(ctx *gin.Context) {
 	}
 	// tip : 3. 返回结果
 	ctx.JSON(http.StatusOK, gin.H{
-		"msg": "用户登录成功",
+		// 像这种有多个返回值的时候，一般会按照首字母的顺序进行排列
+		"msg":  "用户登录成功",
+		"data": token,
 	})
 }
