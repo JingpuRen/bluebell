@@ -23,6 +23,7 @@ func SetUp() *gin.Engine {
 	// 登录业务路由
 	router.GET("./signin", controller.SignInHandler)
 
+	// 登录后才能访问，因此引入了JWT校验中间件
 	router.GET("./ping", middleware.JWTAuthMiddleware(), func(ctx *gin.Context) {
 		ctx.String(http.StatusOK, "pong")
 	})
