@@ -23,3 +23,9 @@
 {"level":"INFO","time":"2025-02-17T23:04:29.108+0800","caller":"logger/logger.go:70","msg":"/signup","status":200,"method":"GET","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.43.0","errors":"","cost":0.0023788}
 {"level":"INFO","time":"2025-02-17T23:05:00.696+0800","caller":"bluebell/main.go:87","msg":"Shutdown Server ..."}
 {"level":"INFO","time":"2025-02-17T23:05:00.696+0800","caller":"bluebell/main.go:96","msg":"Server exiting"}
+{"level":"DEBUG","time":"2025-02-18T10:18:41.571+0800","caller":"bluebell/main.go:39","msg":"Logger init success ..."}
+{"level":"DEBUG","time":"2025-02-18T10:19:39.968+0800","caller":"bluebell/main.go:39","msg":"Logger init success ..."}
+{"level":"ERROR","time":"2025-02-18T10:19:46.802+0800","caller":"controller/user.go:29","msg":"Controller\\user.go SignUpHandler failed"}
+{"level":"INFO","time":"2025-02-18T10:19:46.802+0800","caller":"logger/logger.go:81","msg":"/signup","status":200,"method":"GET","path":"/signup","query":"","ip":"127.0.0.1","user-agent":"PostmanRuntime/7.43.0","errors":"","cost":0}
+{"level":"INFO","time":"2025-02-18T10:21:11.024+0800","caller":"bluebell/main.go:87","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2025-02-18T10:21:11.024+0800","caller":"bluebell/main.go:96","msg":"Server exiting"}

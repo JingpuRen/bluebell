@@ -29,7 +29,20 @@ func Init() (err error) {
 	if err != nil {
 		return
 	}
-	core := zapcore.NewCore(encoder, writeSyncer, l)
+
+	var core zapcore.Core
+
+	// tip : 此处主要是用于我们在不同阶段的调试
+	if viper.GetString("app.mode") == "dev" {
+		// tip : 开发模式，将信息输出到终端上，也就是控制台上
+		consoleEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
+		core = zapcore.NewTee(
+			zapcore.NewCore(encoder, writeSyncer, l),
+			zapcore.NewCore(consoleEncoder, zapcore.Lock(os.Stdout), zapcore.DebugLevel),
+		)
+	} else {
+		core = zapcore.NewCore(encoder, writeSyncer, l)
+	}
 
 	lg := zap.New(core, zap.AddCaller())
 
